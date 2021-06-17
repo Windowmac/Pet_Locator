@@ -24,10 +24,6 @@ const fillSearch = () => {
     .then((response) => {
       if (!response.ok) {
         console.log('hello from line 25');
-        const h1El = document.createElement('h1');
-        h1El.id = 'error-msg';
-        h1El.textContent = 'Error. Please enter a valid zip code and try again';
-        document.body.appendChild(h1El);
         return;
       }
       return response.json();
@@ -45,6 +41,11 @@ const fillSearch = () => {
         .then((response) => {
           if (!response.ok) {
             console.log('this is the error');
+            const h1El = document.createElement('h1');
+            h1El.id = 'error-msg';
+            h1El.textContent =
+              'Error. Please enter a valid zip code and try again';
+            mainEl.appendChild(h1El);
             return;
           } else {
             return response.json();
@@ -52,6 +53,9 @@ const fillSearch = () => {
         })
         .then((data) => {
           console.log(data);
+          if (document.getElementById('error-msg')) {
+            document.getElementById('error-msg').remove();
+          }
           data.animals.forEach((animal) => {
             const rowEl = document.createElement('div');
             rowEl.classList.add('row');
