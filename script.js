@@ -23,7 +23,6 @@ const fillSearch = () => {
   })
     .then((response) => {
       if (!response.ok) {
-        console.log('hello from line 25');
         return;
       }
       return response.json();
@@ -56,22 +55,40 @@ const fillSearch = () => {
           if (document.getElementById('error-msg')) {
             document.getElementById('error-msg').remove();
           }
+          const rowEl = document.createElement('div');
+          rowEl.classList.add('row');
           data.animals.forEach((animal) => {
-            const rowEl = document.createElement('div');
-            rowEl.classList.add('row');
             const column = document.createElement('div');
-            column.classList.add('col', 's12');
+            column.classList.add('col', 's6');
             const petCard = document.createElement('div');
-            petCard.classList.add('card');
+            petCard.classList.add('card', 'horizontal', 'small');
             const cardImg = document.createElement('div');
             cardImg.classList.add('card-image');
             const petImg = document.createElement('img');
             if (animal.primary_photo_cropped) {
               petImg.src = animal.primary_photo_cropped.small;
             }
+            const name = animal.name;
+            const age = animal.age;
+            const distance = Math.round(animal.distance);
+            const cardBodyEl = document.createElement('div');
+            cardBodyEl.classList.add('card-content');
+
+            const nameEl = document.createElement('p');
+            nameEl.textContent = 'Name: ' + name;
+            const ageEl = document.createElement('p');
+            ageEl.textContent = 'Age: ' + age;
+            const distanceEl = document.createElement('p');
+            distanceEl.textContent = 'Distance: ' + distance + ' miles';
+
+            cardBodyEl.appendChild(nameEl);
+            cardBodyEl.appendChild(ageEl);
+            cardBodyEl.appendChild(distanceEl);
+
             rowEl.appendChild(column);
             column.appendChild(petCard);
             petCard.appendChild(cardImg);
+            petCard.appendChild(cardBodyEl);
             cardImg.appendChild(petImg);
             mainEl.appendChild(rowEl);
           });
