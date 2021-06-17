@@ -57,17 +57,25 @@ const fillSearch = () => {
           }
           const rowEl = document.createElement('div');
           rowEl.classList.add('row');
+
+          const pullUpPet = (event) => {
+            console.log(event.target.dataset.id); //TODO: use this id to fetch the info for index2.html
+          };
+
           data.animals.forEach((animal) => {
             const column = document.createElement('div');
             column.classList.add('col', 's6');
             const petCard = document.createElement('div');
             petCard.classList.add('card', 'horizontal', 'small');
             const cardImg = document.createElement('div');
-            cardImg.classList.add('card-image');
+
+            cardImg.classList.add('card-image', 'search-image');
             const petImg = document.createElement('img');
             if (animal.primary_photo_cropped) {
               petImg.src = animal.primary_photo_cropped.small;
             }
+            petImg.setAttribute('data-id', animal.id);
+            console.log(petImg.dataset);
             const name = animal.name;
             const age = animal.age;
             const distance = Math.round(animal.distance);
@@ -91,6 +99,8 @@ const fillSearch = () => {
             petCard.appendChild(cardBodyEl);
             cardImg.appendChild(petImg);
             mainEl.appendChild(rowEl);
+
+            petCard.addEventListener('click', pullUpPet);
           });
         });
     });
