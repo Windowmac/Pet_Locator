@@ -115,11 +115,14 @@ const startSearch = () => {
             const rowEl = document.createElement('div');
             rowEl.classList.add('row', 'search-results');
 
-            const pullUpPet = (event) => {
-              console.log(event.target.dataset.id); //TODO: use this id to fetch the info for index2.html
+            const rememberPet = (event) => {
+              localStorage.setItem(
+                'chosen-pet',
+                JSON.stringify(event.target.dataset.id)
+              ); //TODO: use this id to fetch the info for index2.html
             };
+
             //for each of the search results returned, create their elements and append them to the DOM
-            //TODO: add a 'next page' button for results. (maybe on scroll? but no idea how)
             data.animals.forEach((animal) => {
               const column = document.createElement('div');
               column.classList.add('col', 's6');
@@ -143,7 +146,6 @@ const startSearch = () => {
               const distance = Math.round(animal.distance);
               const cardBodyEl = document.createElement('div');
               cardBodyEl.classList.add('card-content');
-
               const nameEl = document.createElement('p');
               nameEl.textContent = 'Name: ' + name;
               const ageEl = document.createElement('p');
@@ -162,10 +164,10 @@ const startSearch = () => {
               cardImg.appendChild(petImg);
               mainEl.appendChild(rowEl);
 
-              petImg.addEventListener('click', pullUpPet);
-
-              //create 'next' button
+              petImg.addEventListener('click', rememberPet);
             });
+
+            //create 'next' button
             const nextRowEl = document.createElement('div');
             nextRowEl.classList.add('row');
             const nextBtnEl = document.createElement('a');
