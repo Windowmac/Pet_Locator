@@ -123,9 +123,13 @@ const fillSearch = () => {
             const cardImg = document.createElement('div');
             cardImg.classList.add('card-image', 'search-image');
             const petImg = document.createElement('img');
+
+            //some pets listed don't have a picture available, this is my solution for now
             if (animal.primary_photo_cropped) {
-              //some pets listed don't have a picture available, this is my solution for now
               petImg.src = animal.primary_photo_cropped.small;
+            } else {
+              petCard.setAttribute('data-id', animal.id);
+              petCard.addEventListener('click', pullUpPet);
             }
             petImg.setAttribute('data-id', animal.id);
 
