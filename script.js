@@ -16,7 +16,6 @@ setHeaderImg(headerImg);
 
 //on click, fills the search area below the search button with 20 results
 //performs an authority check to receive a token, then performs the fetch including the zip code.
-//TODO: add breed search bar interaction
 const fillSearch = () => {
   fetch('https://api.petfinder.com/v2/oauth2/token', {
     body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
@@ -32,8 +31,12 @@ const fillSearch = () => {
       return response.json();
     })
     .then((data) => {
+      while (document.getElementById('error-msg')) {
+        console.log('this means the error is removed');
+        document.getElementById('error-msg').remove();
+      }
       //build api url for request from user's options
-      let apiUrl = 'https://api.petfinder.com/v2/animals?';
+      let apiUrl = 'https://api.petfinder.com/v2/animals?type=dog';
       const zip = document.getElementById('zip').value;
       const breed = document.getElementById('breed').value;
       const housingReqs = document.querySelectorAll(
@@ -42,7 +45,7 @@ const fillSearch = () => {
       console.log('zip is: ' + zip);
       console.log('breed is: ' + breed);
       if (zip) {
-        apiUrl += `location=${zip}`;
+        apiUrl += `&location=${zip}`;
       }
       if (breed) {
         apiUrl += `&breed=${breed}`;
@@ -67,7 +70,7 @@ const fillSearch = () => {
         }
       }
 
-      console.log(apiUrl);
+      console.log('the constructed url is: ------' + apiUrl);
       fetch(apiUrl, {
         headers: {
           Authorization: `Bearer ${data.access_token}`,
@@ -77,20 +80,22 @@ const fillSearch = () => {
           if (!response.ok) {
             console.log('this is the error');
             const h1El = document.createElement('h1');
-            h1El.id = 'error-msg';
+            const errorRowEl = document.createElement('div');
+            h1El.classList.add('col', 's12');
+            errorRowEl.id = 'error-msg';
+            errorRowEl.classList.add('row');
             h1El.textContent =
               'Error. Please enter a valid zip code and try again';
-            mainEl.appendChild(h1El);
-            return;
+            console.log(h1El);
+            errorRowEl.appendChild(h1El);
+            mainEl.appendChild(errorRowEl);
+            return response.json();
           } else {
             return response.json();
           }
         })
         .then((data) => {
           console.log(data); //if there's an error msg, remove it on a good search
-          while (document.getElementById('error-msg')) {
-            document.getElementById('error-msg').remove();
-          }
 
           //remove current search list if user searches again
           if (document.querySelectorAll('.search-results')) {
