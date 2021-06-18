@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 
 
@@ -108,7 +107,6 @@ function view(){
 
 
   
-=======
 const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
@@ -274,4 +272,3 @@ document.addEventListener('DOMContentLoaded', function () {
   instances[0].options.coverTrigger = false;
   console.log(instances);
 });
->>>>>>> 3b05e2b759f6a8603a56b96c028858021945122a

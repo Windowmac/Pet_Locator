@@ -1,11 +1,10 @@
-<<<<<<< HEAD
  
 .nav {
     max-width: 90%;
     margin: auto;
   }
 
-  .row {
+  .resources {
       color:lightgrey;
       background-color: lightgrey;
       width: 100%; 
@@ -14,7 +13,7 @@
       margin-top: 20px; 
   }
 
-  .col {
+  .links {
       border: solid;
       border-color: lightgrey;
       text-align: center;
@@ -68,7 +67,6 @@
       
  
 
-=======
 .card-title {
   text-shadow: 1px 1px 2px black;
 }
@@ -76,4 +74,3 @@
 .search-image:hover {
   cursor: pointer;
 }
->>>>>>> 3b05e2b759f6a8603a56b96c028858021945122a
