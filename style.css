@@ -1,3 +1,74 @@
+<<<<<<< HEAD
+ 
+.nav {
+    max-width: 90%;
+    margin: auto;
+  }
+
+  .row {
+      color:lightgrey;
+      background-color: lightgrey;
+      width: 100%; 
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-top: 20px; 
+  }
+
+  .col {
+      border: solid;
+      border-color: lightgrey;
+      text-align: center;
+      border-radius: 12px;
+      color: black;
+      font-size: 17px;
+      background-color: white;
+      height: 80px;    
+  }
+
+.dogs{
+    text-align: center;
+    margin: 30px;
+}
+.dogInfo{
+    max-width: 90%;
+    height: fit-content;
+    border: solid;
+    color: rgb(157, 160, 169);
+    margin: auto;
+    padding: 15px;
+}
+
+.aboutMe{
+    max-width: 90%;
+    height:fit-content;
+    border: solid;
+    color: rgb(157, 160, 169);
+    margin: auto;
+    padding: 10px;
+}
+
+#adoptionGuide{
+    max-width: 90%;
+    border: transparent;
+    margin: auto;
+}
+
+.footer {
+    margin: auto;
+    Padding: 40px;
+}
+
+
+
+
+ 
+      
+    
+      
+      
+ 
+
+=======
 .card-title {
   text-shadow: 1px 1px 2px black;
 }
@@ -5,3 +76,4 @@
 .search-image:hover {
   cursor: pointer;
 }
+>>>>>>> 3b05e2b759f6a8603a56b96c028858021945122a
