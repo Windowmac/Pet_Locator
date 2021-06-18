@@ -16,7 +16,7 @@ setHeaderImg(headerImg);
 
 //on click, fills the search area below the search button with 20 results
 //performs an authority check to receive a token, then performs the fetch including the zip code.
-const fillSearch = () => {
+const startSearch = () => {
   fetch('https://api.petfinder.com/v2/oauth2/token', {
     body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
     headers: {
@@ -31,6 +31,7 @@ const fillSearch = () => {
       return response.json();
     })
     .then((data) => {
+      //if there's an error msg, remove it on next search
       while (document.getElementById('error-msg')) {
         console.log('this means the error is removed');
         document.getElementById('error-msg').remove();
@@ -71,103 +72,131 @@ const fillSearch = () => {
       }
 
       console.log('the constructed url is: ------' + apiUrl);
-      fetch(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${data.access_token}`,
-        },
-      }) //check for error
-        .then((response) => {
-          if (!response.ok) {
-            console.log('this is the error');
-            const h1El = document.createElement('h1');
-            const errorRowEl = document.createElement('div');
-            h1El.classList.add('col', 's12');
-            errorRowEl.id = 'error-msg';
-            errorRowEl.classList.add('row');
-            h1El.textContent =
-              'Error. Please enter a valid zip code and try again';
-            console.log(h1El);
-            errorRowEl.appendChild(h1El);
-            mainEl.appendChild(errorRowEl);
-            return response.json();
-          } else {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          console.log(data); //if there's an error msg, remove it on a good search
 
-          //remove current search list if user searches again
-          if (document.querySelectorAll('.search-results')) {
-            const searchRemove = Array.from(
-              document.querySelectorAll('.search-results')
-            );
-            searchRemove.forEach((result) => {
-              result.remove();
-            });
-          }
-          //build the search results starting with the divs for Materialize to work with
-          const rowEl = document.createElement('div');
-          rowEl.classList.add('row', 'search-results');
-
-          const pullUpPet = (event) => {
-            console.log(event.target.dataset.id); //TODO: use this id to fetch the info for index2.html
-          };
-          //for each of the search results returned, create their elements and append them to the DOM
-          //TODO: add a 'next page' button for results. (maybe on scroll? but no idea how)
-          data.animals.forEach((animal) => {
-            const column = document.createElement('div');
-            column.classList.add('col', 's6');
-            const petCard = document.createElement('div');
-            petCard.classList.add('card', 'horizontal', 'small');
-            const cardImg = document.createElement('div');
-            cardImg.classList.add('card-image', 'search-image');
-            const petImg = document.createElement('img');
-
-            //some pets listed don't have a picture available, this is my solution for now
-            if (animal.primary_photo_cropped) {
-              petImg.src = animal.primary_photo_cropped.small;
+      const fillSearch = (url) => {
+        fetch(url, {
+          headers: {
+            Authorization: `Bearer ${data.access_token}`,
+          },
+        }) //check for error
+          .then((response) => {
+            if (!response.ok) {
+              console.log('this is the error');
+              const h1El = document.createElement('h1');
+              const errorRowEl = document.createElement('div');
+              h1El.classList.add('col', 's12');
+              errorRowEl.id = 'error-msg';
+              errorRowEl.classList.add('row');
+              h1El.textContent = 'Error. Please try again';
+              console.log(h1El);
+              errorRowEl.appendChild(h1El);
+              mainEl.appendChild(errorRowEl);
+              return response.json();
             } else {
-              petCard.setAttribute('data-id', animal.id);
-              petCard.addEventListener('click', pullUpPet);
+              return response.json();
             }
-            petImg.setAttribute('data-id', animal.id);
+          })
+          .then((data) => {
+            console.log(data);
 
-            const name = animal.name;
-            const age = animal.age;
-            const distance = Math.round(animal.distance);
-            const cardBodyEl = document.createElement('div');
-            cardBodyEl.classList.add('card-content');
+            //remove current search list if user searches again
+            if (document.querySelectorAll('.search-results')) {
+              const searchRemove = Array.from(
+                document.querySelectorAll('.search-results')
+              );
+              searchRemove.forEach((result) => {
+                result.remove();
+              });
+            }
+            if (document.querySelector('#next-btn')) {
+              document.querySelector('#next-btn').remove();
+            }
+            //build the search results starting with the divs for Materialize to work with
+            const rowEl = document.createElement('div');
+            rowEl.classList.add('row', 'search-results');
 
-            const nameEl = document.createElement('p');
-            nameEl.textContent = 'Name: ' + name;
-            const ageEl = document.createElement('p');
-            ageEl.textContent = 'Age: ' + age;
-            const distanceEl = document.createElement('p');
-            distanceEl.textContent = 'Distance: ' + distance + ' miles';
+            const pullUpPet = (event) => {
+              console.log(event.target.dataset.id); //TODO: use this id to fetch the info for index2.html
+            };
+            //for each of the search results returned, create their elements and append them to the DOM
+            //TODO: add a 'next page' button for results. (maybe on scroll? but no idea how)
+            data.animals.forEach((animal) => {
+              const column = document.createElement('div');
+              column.classList.add('col', 's6');
+              const petCard = document.createElement('div');
+              petCard.classList.add('card', 'horizontal', 'small');
+              const cardImg = document.createElement('div');
+              cardImg.classList.add('card-image', 'search-image');
+              const petImg = document.createElement('img');
 
-            cardBodyEl.appendChild(nameEl);
-            cardBodyEl.appendChild(ageEl);
-            cardBodyEl.appendChild(distanceEl);
+              //some pets listed don't have a picture available, this is my solution for now
+              if (animal.primary_photo_cropped) {
+                petImg.src = animal.primary_photo_cropped.small;
+              } else {
+                petCard.setAttribute('data-id', animal.id);
+                petCard.addEventListener('click', pullUpPet);
+              }
+              petImg.setAttribute('data-id', animal.id);
 
-            rowEl.appendChild(column);
-            column.appendChild(petCard);
-            petCard.appendChild(cardImg);
-            petCard.appendChild(cardBodyEl);
-            cardImg.appendChild(petImg);
-            mainEl.appendChild(rowEl);
+              const name = animal.name;
+              const age = animal.age;
+              const distance = Math.round(animal.distance);
+              const cardBodyEl = document.createElement('div');
+              cardBodyEl.classList.add('card-content');
 
-            petImg.addEventListener('click', pullUpPet);
+              const nameEl = document.createElement('p');
+              nameEl.textContent = 'Name: ' + name;
+              const ageEl = document.createElement('p');
+              ageEl.textContent = 'Age: ' + age;
+              const distanceEl = document.createElement('p');
+              distanceEl.textContent = 'Distance: ' + distance + ' miles';
+
+              cardBodyEl.appendChild(nameEl);
+              cardBodyEl.appendChild(ageEl);
+              cardBodyEl.appendChild(distanceEl);
+
+              rowEl.appendChild(column);
+              column.appendChild(petCard);
+              petCard.appendChild(cardImg);
+              petCard.appendChild(cardBodyEl);
+              cardImg.appendChild(petImg);
+              mainEl.appendChild(rowEl);
+
+              petImg.addEventListener('click', pullUpPet);
+
+              //create 'next' button
+            });
+            const nextRowEl = document.createElement('div');
+            nextRowEl.classList.add('row');
+            const nextBtnEl = document.createElement('a');
+            nextBtnEl.textContent = 'Next';
+            nextBtnEl.classList.add(
+              'waves-effect',
+              'waves-light',
+              'btn',
+              'col',
+              's12'
+            );
+            nextBtnEl.id = 'next-btn';
+            const nextBtnUrl = `https://api.petfinder.com${data.pagination._links.next.href}`;
+            console.log(nextBtnUrl);
+
+            nextRowEl.appendChild(nextBtnEl);
+            mainEl.appendChild(nextRowEl);
+            nextBtnEl.addEventListener('click', () => {
+              fillSearch(nextBtnUrl);
+            });
           });
-        });
+      };
+      fillSearch(apiUrl);
     });
 };
 
-document.getElementById('search-btn').addEventListener('click', fillSearch);
+document.getElementById('search-btn').addEventListener('click', startSearch);
 
 document.addEventListener('DOMContentLoaded', function () {
-  var elems = document.querySelectorAll('.dropdown-trigger');
-  var instances = M.Dropdown.init(elems);
+  const elems = document.querySelectorAll('.dropdown-trigger');
+  const instances = M.Dropdown.init(elems);
   instances[0].options.closeOnClick = false;
   instances[0].options.coverTrigger = false;
   console.log(instances);
