@@ -4,9 +4,105 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Doggo Finder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <header class="container">
+      <div class="row">
+        <div class="col s12 center-align">
+          <div class="card">
+            <div class="card-image">
+              <img id="header-img" />
+              <span class="card-title"><h1>Welcome to Doggo Finder</h1></span>
+            </div>
+            <div class="card-content">
+              <h5>
+                Type in your zip code, add any search filters, find your perfect
+                Doggo!
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="zip" class="materialize-textarea"></textarea>
+          <label for="zip">Enter Zipcode</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="breed" class="materialize-textarea"></textarea>
+              <label for="breed"
+                >Enter Breed preference (or leave blank for none)</label
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <a
+          id="options"
+          class="dropdown-trigger btn col s12"
+          href="#"
+          data-target="housing-requirements"
+          >Personal housing requirements:
+        </a>
+        <form action="#">
+          <ul id="housing-requirements" class="dropdown-content">
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" checked="checked" />
+                <span>Good with kids</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" checked="checked" />
+                <span>Good with dogs</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" checked="checked" />
+                <span>Good with cats</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" checked="checked" />
+                <span>Spayed/Neutered</span>
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" checked="checked" />
+                <span>Has special needs</span>
+              </label>
+            </p>
+          </ul>
+        </form>
+      </div>
+      <div class="row">
+        <a id="search-btn" class="waves-effect waves-light btn col s12"
+          >Search</a
+        >
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
 </html>
-
-
