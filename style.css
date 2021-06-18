@@ -1,6 +1,4 @@
-<<<<<<< HEAD
- 
-.nav {
+/*.nav {
     max-width: 90%;
     margin: auto;
   }
@@ -24,51 +22,40 @@
       background-color: white;
       height: 80px;    
   }
-
-.dogs{
-    text-align: center;
-    margin: 30px;
+*/
+.dogs {
+  text-align: center;
+  margin: 30px;
 }
-.dogInfo{
-    max-width: 90%;
-    height: fit-content;
-    border: solid;
-    color: rgb(157, 160, 169);
-    margin: auto;
-    padding: 15px;
-}
-
-.aboutMe{
-    max-width: 90%;
-    height:fit-content;
-    border: solid;
-    color: rgb(157, 160, 169);
-    margin: auto;
-    padding: 10px;
+.dogInfo {
+  max-width: 90%;
+  height: fit-content;
+  border: solid;
+  color: rgb(157, 160, 169);
+  margin: auto;
+  padding: 15px;
 }
 
-#adoptionGuide{
-    max-width: 90%;
-    border: transparent;
-    margin: auto;
+.aboutMe {
+  max-width: 90%;
+  height: fit-content;
+  border: solid;
+  color: rgb(157, 160, 169);
+  margin: auto;
+  padding: 10px;
 }
 
-.footer {
+#adoptionGuide {
+  max-width: 90%;
+  border: transparent;
+  margin: auto;
+}
+
+/* .footer {
     margin: auto;
     Padding: 40px;
-}
+} */
 
-
-
-
- 
-      
-    
-      
-      
- 
-
-=======
 .card-title {
   text-shadow: 1px 1px 2px black;
 }
@@ -76,4 +63,3 @@
 .search-image:hover {
   cursor: pointer;
 }
->>>>>>> 3b05e2b759f6a8603a56b96c028858021945122a
