@@ -15,12 +15,34 @@
 //     let newImg = document.createElement('img');
 //     newImg.src = img;
 
+const setToDOM = (i) => {
+    const pictureOfDog = document.createElement("img");
+    pictureOfDog.src = i;
+
+    const breedName = /\/breeds\/(.*?)\//gm.exec(i);        
+    pictureOfDog.alt = breedName[1].replace("-", " ") || "random dog";
+
+    document.querySelector(".dogs").append(pictureOfDog);
+    };
+
+(() => {
+    fetch("https://dog.ceo/api/breeds/image/random/1")
+      .then((response) => response.json())
+      .then((response) => response.message.map(i => setToDOM(i)));
+  })();
+
 
 function view() {
   document
     .getElementById('adoptionGuide')
     .setAttribute('style', 'display: block');
-}
+};
+
+function prepare() {
+    document
+      .getElementById('prepare')
+      .setAttribute('style', 'display: block');
+  };
 
 const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
@@ -59,6 +81,10 @@ if (document.getElementById('pet-page')) {
               console.log(data.animal.age);//this is where all animal info is being pulled from 
             const petName = document.getElementById("name")
             petName.textContent += (data.animal.name);
+           const contactName =document.getElementById("contactName")
+           contactName.textContent += (data.animal.name);
+           const emailLink = document.getElementById("email")
+            emailLink.textContent += (data.animal.contact.email);
             const petContact = document.getElementById("contact")
             petContact.textContent += (data.animal.contact.email);
             const petAge = document.getElementById("age") 
@@ -71,6 +97,10 @@ if (document.getElementById('pet-page')) {
             description.textContent += (data.animal.description)
             const dogSize = document.getElementById("size")
             dogSize.textContent += (data.animal.size)
+            const petAddress = document.getElementById("address")
+            petAddress.textContent += (data.animal.contact.address.city)
+            const about = document.getElementById("about")
+            about.textContent += (data.animal.name)
         
 
             // const dogPhotosEl = document.setAttribute("src")
