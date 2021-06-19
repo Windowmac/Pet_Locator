@@ -1,22 +1,23 @@
 //   $('.carousel.carousel-slider').carousel({
 //     fullWidth: true
 //   });
+if (document.getElementById('pet-page')) {
+  const setToDOM = (i) => {
+    const pictureOfDog = document.createElement('img');
+    pictureOfDog.src = i;
 
-const setToDOM = (i) => {
-  const pictureOfDog = document.createElement('img');
-  pictureOfDog.src = i;
+    const breedName = /\/breeds\/(.*?)\//gm.exec(i);
+    pictureOfDog.alt = breedName[1].replace('-', ' ') || 'random dog';
 
-  const breedName = /\/breeds\/(.*?)\//gm.exec(i);
-  pictureOfDog.alt = breedName[1].replace('-', ' ') || 'random dog';
+    document.querySelector('.dogs').append(pictureOfDog);
+  };
 
-  document.querySelector('.dogs').append(pictureOfDog);
-};
-
-(() => {
-  fetch('https://dog.ceo/api/breeds/image/random/1')
-    .then((response) => response.json())
-    .then((response) => response.message.map((i) => setToDOM(i)));
-})();
+  (() => {
+    fetch('https://dog.ceo/api/breeds/image/random/1')
+      .then((response) => response.json())
+      .then((response) => response.message.map((i) => setToDOM(i)));
+  })();
+}
 
 //query parameters to include = photos, Name, location, breed, gender, size, description(about me)
 
@@ -203,13 +204,6 @@ const startSearch = () => {
             const rowEl = document.createElement('div');
             rowEl.classList.add('row', 'search-results');
 
-            const rememberPet = (event) => {
-              localStorage.setItem(
-                'chosen-pet',
-                JSON.stringify(event.target.dataset.id)
-              ); //TODO: use this id to fetch the info for index2.html
-            };
-
             //for each of the search results returned, create their elements and append them to the DOM
             data.animals.forEach((animal) => {
               const column = document.createElement('div');
@@ -251,6 +245,17 @@ const startSearch = () => {
               petCard.appendChild(cardBodyEl);
               cardImg.appendChild(petImg);
               mainEl.appendChild(rowEl);
+
+              const rememberPet = (event) => {
+                localStorage.setItem(
+                  'chosen-pet',
+                  JSON.stringify(event.target.dataset.id)
+                ); //TODO: use this id to fetch the info for index2.html
+                const goToPet = () => {
+                  window.location.href = 'index2.html';
+                };
+                goToPet();
+              };
 
               petImg.addEventListener('click', rememberPet);
             });
