@@ -137,97 +137,112 @@ const startSearch = () => {
           })
           .then((data) => {
             //remove current search list if user searches again
-            if (document.querySelectorAll('.search-results')) {
-              const searchRemove = Array.from(
-                document.querySelectorAll('.search-results')
-              );
-              searchRemove.forEach((result) => {
-                result.remove();
-              });
+            removeSearch();
+
+            function removeSearch() {
+              if (document.querySelectorAll('.search-results')) {
+                const searchRemove = Array.from(
+                  document.querySelectorAll('.search-results')
+                );
+                searchRemove.forEach((result) => {
+                  result.remove();
+                });
+              }
+              if (document.querySelector('#next-btn')) {
+                document.querySelector('#next-btn').remove();
+              }
             }
-            if (document.querySelector('#next-btn')) {
-              document.querySelector('#next-btn').remove();
-            }
+
             //build the search results starting with the divs for Materialize to work with
             const rowEl = document.createElement('div');
             rowEl.classList.add('row', 'search-results');
 
             //for each of the search results returned, create their elements and append them to the DOM
-            data.animals.forEach((animal) => {
-              const column = document.createElement('div');
-              column.classList.add('col', 's6');
-              const petCard = document.createElement('div');
-              petCard.classList.add('card', 'horizontal', 'small');
-              const cardImg = document.createElement('div');
-              cardImg.classList.add('card-image', 'search-image');
-              const petImg = document.createElement('img');
+            createAndAppend(data);
 
-              const rememberPet = (event) => {
-                localStorage.setItem(
-                  'chosen-pet',
-                  JSON.stringify(event.target.dataset.id)
-                );
-                const goToPet = () => {
-                  window.location.href = 'index2.html';
+            function createAndAppend(data) {
+              data.animals.forEach((animal) => {
+                const column = document.createElement('div');
+                column.classList.add('col', 's6');
+                const petCard = document.createElement('div');
+                petCard.classList.add('card', 'horizontal', 'small');
+                const cardImg = document.createElement('div');
+                cardImg.classList.add('card-image', 'search-image');
+                const petImg = document.createElement('img');
+
+                const rememberPet = (event) => {
+                  localStorage.setItem(
+                    'chosen-pet',
+                    JSON.stringify(event.target.dataset.id)
+                  );
+
+                  const goToPet = () => {
+                    window.location.href = 'index2.html';
+                  };
+                  goToPet();
                 };
-                goToPet();
-              };
-              //some pets listed don't have a picture available, this is my solution for now
-              if (animal.primary_photo_cropped) {
-                petImg.src = animal.primary_photo_cropped.small;
-              } else {
-                petCard.setAttribute('data-id', animal.id);
-                petCard.addEventListener('click', rememberPet);
-              }
-              petImg.setAttribute('data-id', animal.id);
 
-              const name = animal.name;
-              const age = animal.age;
-              const distance = Math.round(animal.distance);
-              const cardBodyEl = document.createElement('div');
-              cardBodyEl.classList.add('card-content');
-              const nameEl = document.createElement('p');
-              nameEl.textContent = 'Name: ' + name;
-              const ageEl = document.createElement('p');
-              ageEl.textContent = 'Age: ' + age;
-              const distanceEl = document.createElement('p');
-              distanceEl.textContent = 'Distance: ' + distance + ' miles';
+                //some pets listed don't have a picture available, this is my solution for now
+                if (animal.primary_photo_cropped) {
+                  petImg.src = animal.primary_photo_cropped.small;
+                } else {
+                  petCard.setAttribute('data-id', animal.id);
+                  petCard.addEventListener('click', rememberPet);
+                }
+                petImg.setAttribute('data-id', animal.id);
 
-              cardBodyEl.appendChild(nameEl);
-              cardBodyEl.appendChild(ageEl);
-              cardBodyEl.appendChild(distanceEl);
+                const name = animal.name;
+                const age = animal.age;
+                const distance = Math.round(animal.distance);
+                const cardBodyEl = document.createElement('div');
+                cardBodyEl.classList.add('card-content');
+                const nameEl = document.createElement('p');
+                nameEl.textContent = 'Name: ' + name;
+                const ageEl = document.createElement('p');
+                ageEl.textContent = 'Age: ' + age;
+                const distanceEl = document.createElement('p');
+                distanceEl.textContent = 'Distance: ' + distance + ' miles';
 
-              rowEl.appendChild(column);
-              column.appendChild(petCard);
-              petCard.appendChild(cardImg);
-              petCard.appendChild(cardBodyEl);
-              cardImg.appendChild(petImg);
-              mainEl.appendChild(rowEl);
+                cardBodyEl.appendChild(nameEl);
+                cardBodyEl.appendChild(ageEl);
+                cardBodyEl.appendChild(distanceEl);
 
-              petImg.addEventListener('click', rememberPet);
-            });
+                rowEl.appendChild(column);
+                column.appendChild(petCard);
+                petCard.appendChild(cardImg);
+                petCard.appendChild(cardBodyEl);
+                cardImg.appendChild(petImg);
+                mainEl.appendChild(rowEl);
+
+                petImg.addEventListener('click', rememberPet);
+              });
+            }
 
             //create 'next' button
-            const nextRowEl = document.createElement('div');
-            nextRowEl.classList.add('row');
-            const nextBtnEl = document.createElement('a');
-            nextBtnEl.textContent = 'Next';
-            nextBtnEl.classList.add(
-              'waves-effect',
-              'waves-light',
-              'btn',
-              'col',
-              's12'
-            );
-            nextBtnEl.id = 'next-btn';
-            const nextBtnUrl = `https://api.petfinder.com${data.pagination._links.next.href}`;
-            console.log(nextBtnUrl);
+            createNextButton(data);
 
-            nextRowEl.appendChild(nextBtnEl);
-            mainEl.appendChild(nextRowEl);
-            nextBtnEl.addEventListener('click', () => {
-              fillSearch(nextBtnUrl);
-            });
+            function createNextButton(data) {
+              const nextRowEl = document.createElement('div');
+              nextRowEl.classList.add('row');
+              const nextBtnEl = document.createElement('a');
+              nextBtnEl.textContent = 'Next';
+              nextBtnEl.classList.add(
+                'waves-effect',
+                'waves-light',
+                'btn',
+                'col',
+                's12'
+              );
+              nextBtnEl.id = 'next-btn';
+              const nextBtnUrl = `https://api.petfinder.com${data.pagination._links.next.href}`;
+              console.log(nextBtnUrl);
+
+              nextRowEl.appendChild(nextBtnEl);
+              mainEl.appendChild(nextRowEl);
+              nextBtnEl.addEventListener('click', () => {
+                fillSearch(nextBtnUrl);
+              });
+            }
           });
       };
       fillSearch(apiUrl);
