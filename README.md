@@ -1,2 +1,6 @@
 # Pet_Locator
-find pets!
+
+Welcome to Doogo Finder.
+The #1 resource to search for your new family member!
+
+See wesite at 
