@@ -23,6 +23,10 @@ const setToDOM = (i) => {
   })();
 
 
+
+
+  
+
 //query parameters to include = photos, Name, location, breed, gender, size, description(about me)
 
 //   GET https://api.petfinder.com/v2/animals/{id}

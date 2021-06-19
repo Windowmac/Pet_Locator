@@ -8,9 +8,9 @@
       color:lightgrey;
       background-color: lightgrey;
       width: 100%; 
-      padding-top: 10px;
+      padding-top: 20px;
       padding-bottom: 10px;
-      margin-top: 20px; 
+      margin-top: 20px;   
   }
 
   .links {
@@ -19,14 +19,17 @@
       text-align: center;
       border-radius: 12px;
       color: black;
-      font-size: 17px;
-      background-color: white;
-      height: 80px;    
+      font-size: 16px;
+      background-color: white;           
   }
+
+ 
 
 .dogs{
     text-align: center;
-    margin: 30px;
+    margin: auto;
+    padding: 15px;
+    
 }
 .dogInfo{
     max-width: 90%;
@@ -54,7 +57,8 @@
 
 .footer {
     margin: auto;
-    Padding: 40px;
+    Padding: 20px;
+
 }
 
 
