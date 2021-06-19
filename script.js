@@ -14,37 +14,15 @@
 //     let newImg = document.createElement('img');
 //     newImg.src = img;
 
-<<<<<<< HEAD
-const setToDOM = (i) => {
-    const pictureOfDog = document.createElement("img");
-    pictureOfDog.src = i;
-
-    const breedName = /\/breeds\/(.*?)\//gm.exec(i);        
-    pictureOfDog.alt = breedName[1].replace("-", " ") || "random dog";
-
-    document.querySelector(".dogs").append(pictureOfDog);
-    };
-
-(() => {
-    fetch("https://dog.ceo/api/breeds/image/random/1")
-      .then((response) => response.json())
-      .then((response) => response.message.map(i => setToDOM(i)));
-  })();
-
-
-=======
->>>>>>> main
 function view() {
   document
     .getElementById('adoptionGuide')
     .setAttribute('style', 'display: block');
-};
+}
 
 function prepare() {
-    document
-      .getElementById('prepare')
-      .setAttribute('style', 'display: block');
-  };
+  document.getElementById('prepare').setAttribute('style', 'display: block');
+}
 
 const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
@@ -52,88 +30,10 @@ const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
 
 if (document.getElementById('pet-page')) {
-<<<<<<< HEAD
-    const petId = JSON.parse(localStorage.getItem("chosen-pet"));
-    console.log(petId)
-    const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
-    console.log(petUrl)
-    fetch('https://api.petfinder.com/v2/oauth2/token', {
-      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return;
-        }
-        return response.json();
-      })
-  
-      .then((data) => {
-          fetch(petUrl, {
-          headers: {
-            Authorization: `Bearer ${data.access_token}`,
-          }
-        
-          })
-          .then((response) => response.json())
-          .then((data) => {
-              console.log(data.animal)
-              console.log(data.animal.age);//this is where all animal info is being pulled from 
-            const petName = document.getElementById("name")
-            petName.textContent += (data.animal.name);
-           const contactName =document.getElementById("contactName")
-           contactName.textContent += (data.animal.name);
-           const emailLink = document.getElementById("email")
-            emailLink.textContent += (data.animal.contact.email);
-            const petContact = document.getElementById("contact")
-            petContact.textContent += (data.animal.contact.email);
-            const petAge = document.getElementById("age") 
-            petAge.textContent += (data.animal.age);
-            const petGender = document.getElementById("gender")
-            petGender.textContent += (data.animal.gender)
-            const petBreed = document.getElementById("breed")
-            petBreed.textContent += (data.animal.breeds.primary)
-            const description = document.getElementById("description")
-            description.textContent += (data.animal.description)
-            const dogSize = document.getElementById("size")
-            dogSize.textContent += (data.animal.size)
-            const petAddress = document.getElementById("address")
-            petAddress.textContent += (data.animal.contact.address.city)
-            const about = document.getElementById("about")
-            about.textContent += (data.animal.name)
-        
-
-            // const dogPhotosEl = document.setAttribute("src")
-            // dogPhotos.append(dogPhotosEl)
-
-          })
-      })
-    }
-   
-
-//sets a random header image from dog ceo
-const setHeaderImg = (imgEl) => {
-  fetch('https://dog.ceo/api/breeds/image/random')
-    .then((response) => response.json())
-    .then((data) => {
-      imgEl.src = data.message;
-    });
-};
-
-setHeaderImg(headerImg);
-
-//on click, fills the search area below the search button with 20 results
-//performs an authority check to receive a token, then performs the fetch including the zip code.
-const startSearch = () => {
-=======
   const petId = JSON.parse(localStorage.getItem('chosen-pet'));
   console.log(petId);
   const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
   console.log(petUrl);
->>>>>>> main
   fetch('https://api.petfinder.com/v2/oauth2/token', {
     body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
     headers: {
