@@ -40,17 +40,25 @@
       </div>
 
       <div class="row">
-        <a class="dropdown-trigger" href="#" data-target="breed-list"
-          >Breed List</a
+        <div
+          class="dropdown-trigger btn col s12"
+          href="#"
+          data-target="breed-list"
         >
-        <ul id="breed-list" class="dropdown-content"></ul>
+          <ul id="breed-list" class="dropdown-content"></ul>
+          <span>Breed List</span>
+        </div>
+      </div>
+
+      <div class="row">
         <form class="col s12">
           <div class="row">
             <div class="input-field col s12">
-              <textarea id="breed" class="materialize-textarea"></textarea>
-              <label for="breed"
-                >Enter Breed preference (or leave blank for none)</label
-              >
+              <textarea
+                id="breed"
+                class="materialize-textarea"
+                placeholder="Enter Breed preference (or leave blank for none)"
+              ></textarea>
             </div>
           </div>
         </form>
