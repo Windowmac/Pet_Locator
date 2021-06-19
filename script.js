@@ -1,27 +1,16 @@
 //   $('.carousel.carousel-slider').carousel({
 //     fullWidth: true
 //   });
-if (document.getElementById('pet-page')) {
-  const setToDOM = (i) => {
-    const pictureOfDog = document.createElement('img');
-    pictureOfDog.src = i;
 
-    const breedName = /\/breeds\/(.*?)\//gm.exec(i);
-    pictureOfDog.alt = breedName[1].replace('-', ' ') || 'random dog';
 
-    document.querySelector('.dogs').append(pictureOfDog);
-  };
 
-  (() => {
-    fetch('https://dog.ceo/api/breeds/image/random/1')
-      .then((response) => response.json())
-      .then((response) => response.message.map((i) => setToDOM(i)));
-  })();
-}
+
+    
+
 
 //query parameters to include = photos, Name, location, breed, gender, size, description(about me)
 
-//   GET https://api.petfinder.com/v2/animals/{id}
+//   GET https://api.petfinder.com/v2/animals/{}
 
 //    function results(response) {
 //     console.log(response);
@@ -91,6 +80,42 @@ const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
+
+if (document.getElementById('pet-page')) {
+    const petId = JSON.parse(localStorage.getItem("chosen-pet"));
+    console.log(petId)
+    const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
+    console.log(petUrl)
+    fetch('https://api.petfinder.com/v2/oauth2/token', {
+      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      method: 'POST',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return;
+        }
+        return response.json();
+      })
+  
+      .then((data) => {
+          fetch(petUrl, {
+          headers: {
+            Authorization: `Bearer ${data.access_token}`,
+          }
+        
+          })
+          .then((response) => response.json())
+          .then((data) => {
+              console.log(data.animal.age);//this is where all animal info is being pulled from 
+            const petName = document.getElementById("name")
+            petName.textContent += (data.animal.name);
+          })
+      })
+    }
+   
 
 //sets a random header image from dog ceo
 const setHeaderImg = (imgEl) => {
@@ -219,7 +244,7 @@ const startSearch = () => {
                 petImg.src = animal.primary_photo_cropped.small;
               } else {
                 petCard.setAttribute('data-id', animal.id);
-                petCard.addEventListener('click', pullUpPet);
+                petCard.addEventListener('click', rememberPet);
               }
               petImg.setAttribute('data-id', animal.id);
 
