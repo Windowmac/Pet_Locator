@@ -223,6 +223,7 @@ const startSearch = () => {
               ageEl.textContent = 'Age: ' + age;
               const distanceEl = document.createElement('p');
               distanceEl.textContent = 'Distance: ' + distance + ' miles';
+              console.log('hello, I am ' + ageEl)
 
               cardBodyEl.appendChild(nameEl);
               cardBodyEl.appendChild(ageEl);
