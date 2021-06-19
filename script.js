@@ -3,22 +3,9 @@
 //   });
 
 
-
-
-    
-
-
 //query parameters to include = photos, Name, location, breed, gender, size, description(about me)
 
-//   GET https://api.petfinder.com/v2/animals/{}
-
-//    function results(response) {
-//     console.log(response);
-//     let dogName = response.petfinder.pet.name.$t;
-//     let img = response.petfinder.pet.media.photos.photo[0].$t;
-//     let id = response.petfinder.pet.id.$t;
-//     let cityState = response.petfinder.pet.city.state.$t;
-//     let gender = response.petfinder.pet.gender.$t;
+//  
 
 //     let newEl = document.createElement('a');
 //     let newDiv = document.createElement('div');
@@ -28,53 +15,12 @@
 //     let newImg = document.createElement('img');
 //     newImg.src = img;
 
-//     let list = document.createElement("ul");
-//     list.setAttribute("id", "cityState", "gender");
-//     document.body.appendChild(list);
-
-//     newDiv.appendChild(dogName);
-//     list.appendChild(newDiv);
-//     list.appendChild(newImg);
-// }
-// });
-// })
 
 function view() {
   document
     .getElementById('adoptionGuide')
     .setAttribute('style', 'display: block');
 }
-
-//   fetch('https://api.petfinder.com/v2/oauth2/token', {
-//     body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded',
-//     },
-//     method: 'POST',
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log(data);
-//       fetch(`https://api.petfinder.com/v2/animals?type=dog`, {
-//         headers: {
-//           Authorization: `Bearer ${data.access_token}`,
-//         },
-//       })
-//         .then((response) => response.json())
-//         .then((data) => {
-//           console.log(data);
-//         });
-//     });
-
-// function showGuide() {
-
-//     const guide = document.getElementById("adoptionGuide");
-//     if (guide.style.display === "none") {
-//       guide.style.display = "inline";
-//     } else {
-//       guide.style.display = "none";
-//     }
-//   }
 
 const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
@@ -109,9 +55,27 @@ if (document.getElementById('pet-page')) {
           })
           .then((response) => response.json())
           .then((data) => {
+              console.log(data.animal)
               console.log(data.animal.age);//this is where all animal info is being pulled from 
             const petName = document.getElementById("name")
             petName.textContent += (data.animal.name);
+            const petContact = document.getElementById("contact")
+            petContact.textContent += (data.animal.contact.email);
+            const petAge = document.getElementById("age") 
+            petAge.textContent += (data.animal.age);
+            const petGender = document.getElementById("gender")
+            petGender.textContent += (data.animal.gender)
+            const petBreed = document.getElementById("breed")
+            petBreed.textContent += (data.animal.breeds.primary)
+            const description = document.getElementById("description")
+            description.textContent += (data.animal.description)
+            const dogSize = document.getElementById("size")
+            dogSize.textContent += (data.animal.size)
+        
+
+            // const dogPhotosEl = document.setAttribute("src")
+            // dogPhotos.append(dogPhotosEl)
+
           })
       })
     }
