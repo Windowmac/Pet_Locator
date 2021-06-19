@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
     <title>Doggo Finder Page 2</title>
 </head>
 
-<body>
+<body id="pet-page">
     <header>
         <nav class="nav"> 
             <div class="nav-wrapper">
@@ -19,7 +19,7 @@
                     <div class="resources row s12">
                         <a class="links row s3 active col s3" href="#">Find a Dog</a>
                         <a class="links row s3 active col s3" href="#adoptionGuide" onclick="view()">Adoption Guide</a>
-                        <a class="links row s3 active col s3" href="#">Breed Images</a>
+                        <a class="links row s3 active col s3" href="#">Breeds Info</a>
                         <a class="links row s3 active col s3" href="#">How to Prepare</a>
                     </div>
                 </ul>
@@ -65,20 +65,21 @@
         children at home, and a demanding job, getting a high-maintenance dog might not be a good idea. You would
         probably do better with a chill, older dog who doesn’t need to be trained.
     </p>
+    <div class="dogs">
+    </div>
 </div>
-
     <footer>
         <div class="footer">
             <div class="resources row s12">
                 <ul>
-                    <li><a a href="mailto:doggofinder.com" class="btn links col s4 grey-text text-black">Contact US</a></li>
-                    <li><a a href="mailto:doggofinder.com" class="btn links col s4 grey-text text-black">Leave Feedback</a></li>
-                    <li><a class="btn links col s4 grey-text text-black" href="#!">FAQs</a><br>1800 find fido</li>
+                    <li><a a href="mailto:doggofinder.com" class="links col s4 grey-text text-black">Contact Info</a></li>
+                    <li><a a href="mailto:doggofinder.com" class="links col s4 grey-text text-black">Email</a></li>
+                    <li><a class="links col s4 grey-text text-black" href="#!">Phone:</a><br>1800 find fido</li>
                 </ul>
             </div>
         </div>
     </footer>
-    <script src="/script.js"></script>
+    <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
