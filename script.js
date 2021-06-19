@@ -2,10 +2,9 @@
 //     fullWidth: true
 //   });
 
-
 //query parameters to include = photos, Name, location, breed, gender, size, description(about me)
 
-//  
+//
 
 //     let newEl = document.createElement('a');
 //     let newDiv = document.createElement('div');
@@ -14,7 +13,6 @@
 
 //     let newImg = document.createElement('img');
 //     newImg.src = img;
-
 
 function view() {
   document
@@ -28,58 +26,54 @@ const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
 
 if (document.getElementById('pet-page')) {
-    const petId = JSON.parse(localStorage.getItem("chosen-pet"));
-    console.log(petId)
-    const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
-    console.log(petUrl)
-    fetch('https://api.petfinder.com/v2/oauth2/token', {
-      body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      method: 'POST',
+  const petId = JSON.parse(localStorage.getItem('chosen-pet'));
+  console.log(petId);
+  const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
+  console.log(petUrl);
+  fetch('https://api.petfinder.com/v2/oauth2/token', {
+    body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          return;
-        }
-        return response.json();
-      })
-  
-      .then((data) => {
-          fetch(petUrl, {
-          headers: {
-            Authorization: `Bearer ${data.access_token}`,
-          }
-        
-          })
-          .then((response) => response.json())
-          .then((data) => {
-              console.log(data.animal)
-              console.log(data.animal.age);//this is where all animal info is being pulled from 
-            const petName = document.getElementById("name")
-            petName.textContent += (data.animal.name);
-            const petContact = document.getElementById("contact")
-            petContact.textContent += (data.animal.contact.email);
-            const petAge = document.getElementById("age") 
-            petAge.textContent += (data.animal.age);
-            const petGender = document.getElementById("gender")
-            petGender.textContent += (data.animal.gender)
-            const petBreed = document.getElementById("breed")
-            petBreed.textContent += (data.animal.breeds.primary)
-            const description = document.getElementById("description")
-            description.textContent += (data.animal.description)
-            const dogSize = document.getElementById("size")
-            dogSize.textContent += (data.animal.size)
-        
 
-            // const dogPhotosEl = document.setAttribute("src")
-            // dogPhotos.append(dogPhotosEl)
-
-          })
+    .then((data) => {
+      fetch(petUrl, {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
       })
-    }
-   
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.animal);
+          console.log(data.animal.age); //this is where all animal info is being pulled from
+          const petName = document.getElementById('name');
+          petName.textContent += data.animal.name;
+          const petContact = document.getElementById('contact');
+          petContact.textContent += data.animal.contact.email;
+          const petAge = document.getElementById('age');
+          petAge.textContent += data.animal.age;
+          const petGender = document.getElementById('gender');
+          petGender.textContent += data.animal.gender;
+          const petBreed = document.getElementById('breed');
+          petBreed.textContent += data.animal.breeds.primary;
+          const description = document.getElementById('description');
+          description.textContent += data.animal.description;
+          const dogSize = document.getElementById('size');
+          dogSize.textContent += data.animal.size;
+
+          // const dogPhotosEl = document.setAttribute("src")
+          // dogPhotos.append(dogPhotosEl)
+        });
+    });
+}
 
 //sets a random header image from dog ceo
 const setHeaderImg = (imgEl) => {
@@ -91,6 +85,34 @@ const setHeaderImg = (imgEl) => {
 };
 
 setHeaderImg(headerImg);
+
+const fillBreedList = () => {
+  fetch('https://api.petfinder.com/v2/oauth2/token', {
+    body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    method: 'POST',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      return response.json();
+    })
+    .then((data) => {
+      fetch('https://api.petfinder.com/v2/types/dog/breeds', {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(`the breed list is:  ${data}`);
+        });
+    });
+};
+fillBreedList();
 
 //on click, fills the search area below the search button with 20 results
 //performs an authority check to receive a token, then performs the fetch including the zip code.
@@ -223,7 +245,6 @@ const startSearch = () => {
               ageEl.textContent = 'Age: ' + age;
               const distanceEl = document.createElement('p');
               distanceEl.textContent = 'Distance: ' + distance + ' miles';
-              console.log('hello, I am ' + ageEl)
 
               cardBodyEl.appendChild(nameEl);
               cardBodyEl.appendChild(ageEl);
@@ -240,7 +261,7 @@ const startSearch = () => {
                 localStorage.setItem(
                   'chosen-pet',
                   JSON.stringify(event.target.dataset.id)
-                ); //TODO: use this id to fetch the info for index2.html
+                );
                 const goToPet = () => {
                   window.location.href = 'index2.html';
                 };
