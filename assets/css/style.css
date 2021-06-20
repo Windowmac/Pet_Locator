@@ -22,9 +22,10 @@
   background-color: white;
   height: 80px;
 }
-*/ .dogs {
+.dogs {
   text-align: center;
   margin: auto;
+  
 }
 .dogInfo {
   max-width: 90%;
@@ -49,10 +50,17 @@
   border: transparent;
   margin: auto;
 }
+#prepare {
+    max-width: 90%;
+    border: transparent;
+    margin: auto;  
+}
 
 .footer {
   margin: auto;
   padding: 40px;
+  border-style: transparent;
+ 
 }
 
 .card-title {
@@ -71,3 +79,12 @@
 .carousel-item {
   width: 300px !important;
 }
+.contact{
+    margin: Auto;
+    border-style: transparent;
+    text-align: center;
+    color: rgb(157, 160, 169);
+    
+
+}
+

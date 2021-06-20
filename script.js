@@ -84,15 +84,12 @@ if (document.getElementById('pet-page')) {
 
           //get the photos from the data
           const photoData = data.animal.photos;
-          //each of these is an object which contains
-          //properties full, large, medium and small
-
-          //TODO: compensate for no photo
+    
+          //compensate for no photo
           if (photoData && photoData.length > 0){
             const photos = photoData.map(singlePhoto => {
               return singlePhoto.large;
             })
-
             //if there are more than 5 images, cut the array down to 5
             if (photos.length > 5){
               photos.slice(0,5);
@@ -102,23 +99,20 @@ if (document.getElementById('pet-page')) {
             //clear the element contents
             carousel.innerHTML = '';
             carousel.classList.add('carousel');
-
-
             //build our carousel
             photos.forEach((singlePhoto,idx) => {
-              //EXAMPLE: <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
-              
+   
               //create the a tag
-              const aTag = document.createElement('a');
-              aTag.classList.add('carousel-item');
-              aTag.setAttribute('href', `#${carouselInfo[idx]}!`);
+              const aEl = document.createElement('a');
+              aEl.classList.add('carousel-item');
+              aEl.setAttribute('href', `#${carouselInfo[idx]}!`);
 
               //create the image
               const img = document.createElement('img');
               img.setAttribute('src',singlePhoto);
 
               //append the image to the a tag
-              aTag.appendChild(img);
+              aEl.appendChild(img);
 
               //append the atag to the carousel div
               carousel.appendChild(aTag);
@@ -127,10 +121,6 @@ if (document.getElementById('pet-page')) {
             //start our carousel
             const instances = M.Carousel.init(carousel, {});
           }
-
-          
-          
-
           // const dogPhotosEl = document.setAttribute("src")
           // dogPhotos.append(dogPhotosEl)
         });
