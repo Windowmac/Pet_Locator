@@ -24,7 +24,7 @@
 }
 */ .dogs {
   text-align: center;
-  margin: 30px;
+  margin: auto;
 }
 .dogInfo {
   max-width: 90%;
@@ -61,4 +61,13 @@
 
 .search-image:hover {
   cursor: pointer;
+}
+
+.carousel {
+  height: 450px;
+  perspective: 600px;
+}
+
+.carousel-item {
+  width: 300px !important;
 }

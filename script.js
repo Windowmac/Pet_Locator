@@ -1,29 +1,38 @@
-//   $('.carousel.carousel-slider').carousel({
-//     fullWidth: true
-//   });
 
-//query parameters to include = photos, Name, location, breed, gender, size, description(about me)
+const setToDOM = (i) => {
+    const pictureOfDog = document.createElement("img");
+    pictureOfDog.src = i;
 
-//
+    // const breedName = /\/breeds\/(.*?)\//gm.exec(i);        
+    // pictureOfDog.alt = breedName[1].replace("-", " ") || "random dog";
 
-//     let newEl = document.createElement('a');
-//     let newDiv = document.createElement('div');
-//     newEl.textContent = dogName;
-//     newEl.href = 'https://www.petfinder.com/petdetail/' + id ;
+    document.querySelector(".dogs").append(pictureOfDog);
+    };
+(() => {
+    fetch("https://dog.ceo/api/breeds/image/random/1")
+      .then((response) => response.json())
+      .then((response) => response.message.map(i => setToDOM(i)));
+  })();
 
-//     let newImg = document.createElement('img');
-//     newImg.src = img;
 
 function view() {
   document
     .getElementById('adoptionGuide')
     .setAttribute('style', 'display: block');
-}
+};
+
+function prepare() {
+    document
+      .getElementById('prepare')
+      .setAttribute('style', 'display: block');
+  };
 
 const headerImg = document.getElementById('header-img');
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
+
+const carouselInfo = ['one','two','three','four','five'];
 
 if (document.getElementById('pet-page')) {
   const petId = JSON.parse(localStorage.getItem('chosen-pet'));
@@ -68,6 +77,59 @@ if (document.getElementById('pet-page')) {
           description.textContent += data.animal.description;
           const dogSize = document.getElementById('size');
           dogSize.textContent += data.animal.size;
+          const petAddress = document.getElementById("address")
+          petAddress.textContent += data.animal.contact.address.city;
+          const about = document.getElementById("about")
+          about.textContent += data.animal.name;
+
+          //get the photos from the data
+          const photoData = data.animal.photos;
+          //each of these is an object which contains
+          //properties full, large, medium and small
+
+          //TODO: compensate for no photo
+          if (photoData && photoData.length > 0){
+            const photos = photoData.map(singlePhoto => {
+              return singlePhoto.large;
+            })
+
+            //if there are more than 5 images, cut the array down to 5
+            if (photos.length > 5){
+              photos.slice(0,5);
+            }
+            //get our element
+            const carousel = document.querySelector('#photo-carousel');
+            //clear the element contents
+            carousel.innerHTML = '';
+            carousel.classList.add('carousel');
+
+
+            //build our carousel
+            photos.forEach((singlePhoto,idx) => {
+              //EXAMPLE: <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/250/250/nature/1"></a>
+              
+              //create the a tag
+              const aTag = document.createElement('a');
+              aTag.classList.add('carousel-item');
+              aTag.setAttribute('href', `#${carouselInfo[idx]}!`);
+
+              //create the image
+              const img = document.createElement('img');
+              img.setAttribute('src',singlePhoto);
+
+              //append the image to the a tag
+              aTag.appendChild(img);
+
+              //append the atag to the carousel div
+              carousel.appendChild(aTag);
+            });
+
+            //start our carousel
+            const instances = M.Carousel.init(carousel, {});
+          }
+
+          
+          
 
           // const dogPhotosEl = document.setAttribute("src")
           // dogPhotos.append(dogPhotosEl)
