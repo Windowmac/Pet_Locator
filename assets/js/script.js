@@ -169,28 +169,6 @@ const startSearch = () => {
                 const cardImg = document.createElement('div');
                 cardImg.classList.add('card-image', 'search-image');
                 const petImg = document.createElement('img');
-
-                const rememberPet = (event) => {
-                  localStorage.setItem(
-                    'chosen-pet',
-                    JSON.stringify(event.target.dataset.id)
-                  );
-
-                  const goToPet = () => {
-                    window.location.href = 'index2.html';
-                  };
-                  goToPet();
-                };
-
-                //some pets listed don't have a picture available, this is my solution for now
-                if (animal.primary_photo_cropped) {
-                  petImg.src = animal.primary_photo_cropped.small;
-                } else {
-                  petCard.setAttribute('data-id', animal.id);
-                  petCard.addEventListener('click', rememberPet);
-                }
-                petImg.setAttribute('data-id', animal.id);
-
                 const name = animal.name;
                 const age = animal.age;
                 const distance = Math.round(animal.distance);
@@ -203,6 +181,19 @@ const startSearch = () => {
                 const distanceEl = document.createElement('p');
                 distanceEl.textContent = 'Distance: ' + distance + ' miles';
 
+                const goToPet = (event) => {
+                  window.location.href = `index2.html?id=${event.target.dataset.id}`;
+                };
+
+                //some pets listed don't have a picture available, this is my solution for now
+                if (animal.primary_photo_cropped) {
+                  petImg.src = animal.primary_photo_cropped.small;
+                } else {
+                  petCard.setAttribute('data-id', animal.id);
+                  petCard.addEventListener('click', goToPet);
+                }
+                petImg.setAttribute('data-id', animal.id);
+
                 cardBodyEl.appendChild(nameEl);
                 cardBodyEl.appendChild(ageEl);
                 cardBodyEl.appendChild(distanceEl);
@@ -214,7 +205,7 @@ const startSearch = () => {
                 cardImg.appendChild(petImg);
                 mainEl.appendChild(rowEl);
 
-                petImg.addEventListener('click', rememberPet);
+                petImg.addEventListener('click', goToPet);
               });
             }
 

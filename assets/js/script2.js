@@ -1,6 +1,9 @@
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
-const petId = JSON.parse(localStorage.getItem('chosen-pet'));
+const pageUrl = new URL(window.location.href);
+const params = new URLSearchParams(pageUrl.search);
+console.log(params.get('id'));
+const petId = params.get('id');
 console.log(petId);
 
 const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
