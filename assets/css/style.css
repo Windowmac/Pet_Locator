@@ -71,6 +71,14 @@
   cursor: pointer;
 }
 
+.carousel {
+  height: 450px;
+  perspective: 600px;
+}
+
+.carousel-item {
+  width: 300px !important;
+}
 .contact{
     margin: Auto;
     border-style: transparent;
