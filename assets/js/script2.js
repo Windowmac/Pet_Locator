@@ -1,9 +1,13 @@
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
-const petId = JSON.parse(localStorage.getItem('chosen-pet'));
+const pageUrl = new URL(window.location.href);
+const params = new URLSearchParams(pageUrl.search);
+console.log(params.get('id'));
+const petId = params.get('id');
 console.log(petId);
 
 const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
+const carouselInfo = ['one','two','three','four','five'];
 console.log(petUrl);
 
 fetch('https://api.petfinder.com/v2/oauth2/token', {
@@ -44,11 +48,47 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         description.textContent += data.animal.description;
         const dogSize = document.getElementById('size');
         dogSize.textContent += data.animal.size;
+        const petAddress = document.getElementById("address")
+        petAddress.textContent += data.animal.contact.address.city;
+        const about = document.getElementById("about")
+        about.textContent += data.animal.name;
+        const contactName = document.getElementById("contactName")
+        contactName.textContent += data.animal.name;
 
-        // const dogPhotosEl = document.setAttribute("src")
-        // dogPhotos.append(dogPhotosEl)
+        //get the photos from the data
+        const photoData = data.animal.photos;
+    
+        //compensate for no photo
+        if (photoData && photoData.length > 0){
+          const photos = photoData.map(singlePhoto => {
+            return singlePhoto.large;
+          })
+      //if there are more than 5 images, cut the array down to 5
+          if (photos.length > 5){
+            photos.slice(0,5);
+          }
+         
+          const carousel = document.querySelector('#photo-carousel');
+          carousel.innerHTML = '';
+          carousel.classList.add('carousel');
+       //build carousel
+          photos.forEach((singlePhoto,idx) => {
+            const aEl = document.createElement('a');
+            aEl.classList.add('carousel-item');
+            aEl.setAttribute('href', `#${carouselInfo[idx]}!`);
+            const img = document.createElement('img');
+            img.setAttribute('src',singlePhoto);
+            aEl.appendChild(img);
+            carousel.appendChild(aEl);
+          });
+
+         //start carousel
+          const instances = M.Carousel.init(carousel, {});
+        }
       });
   });
+  console.log(dogPhotosEl)  
+  
 function view() {
   document
     .getElementById('adoptionGuide')
