@@ -3,7 +3,7 @@ const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
 let token = '';
-let apiUrl = new URL('https://api.petfinder.com/v2/animals?type=dog');
+const apiUrl = new URL('https://api.petfinder.com/v2/animals?type=dog');
 //sets a random header image from dog ceo
 const setHeaderImg = (imgEl) => {
   fetch('https://dog.ceo/api/breeds/image/random')
@@ -315,6 +315,7 @@ function fillSearch(url) {
 
         nextRowEl.appendChild(nextBtnEl);
         mainEl.appendChild(nextRowEl);
+
         nextBtnEl.addEventListener('click', () => {
           apiUrl.href = nextBtnUrl.href;
           window.history.replaceState(
