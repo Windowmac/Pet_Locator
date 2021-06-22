@@ -3,7 +3,7 @@ const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const mainEl = document.getElementById('main');
 let token = '';
-let apiUrl = 'https://api.petfinder.com/v2/animals?type=dog';
+let apiUrl = new URL('https://api.petfinder.com/v2/animals?type=dog');
 //sets a random header image from dog ceo
 const setHeaderImg = (imgEl) => {
   fetch('https://dog.ceo/api/breeds/image/random')
@@ -42,7 +42,6 @@ const getToken = () => {
 
 //get token and perform auto-fetches
 getToken();
-console.log('this is the token: ' + token);
 //fill the breed dropdown list from a call to the server (over 250 items)
 function fillBreedList() {
   fetch('https://api.petfinder.com/v2/types/dog/breeds', {
@@ -142,15 +141,13 @@ function fillSearch(url) {
           const petImg = document.createElement('img');
           const name = animal.name;
           const age = animal.age;
-          const distance = Math.round(animal.distance);
+
           const cardBodyEl = document.createElement('div');
           cardBodyEl.classList.add('card-content');
           const nameEl = document.createElement('p');
           nameEl.textContent = 'Name: ' + name;
           const ageEl = document.createElement('p');
           ageEl.textContent = 'Age: ' + age;
-          const distanceEl = document.createElement('p');
-          distanceEl.textContent = 'Distance: ' + distance + ' miles';
 
           const goToPet = (event) => {
             window.location.href = `index2.html?id=${event.target.dataset.id}`;
@@ -167,7 +164,19 @@ function fillSearch(url) {
 
           cardBodyEl.appendChild(nameEl);
           cardBodyEl.appendChild(ageEl);
-          cardBodyEl.appendChild(distanceEl);
+
+          if (animal.distance) {
+            const distance = Math.round(animal.distance);
+            const distanceEl = document.createElement('p');
+            distanceEl.textContent = 'Distance: ' + distance + ' miles';
+            cardBodyEl.appendChild(distanceEl);
+          } else {
+            const city = animal.contact.address.city;
+            const state = animal.contact.address.state;
+            const cityEl = document.createElement('p');
+            cityEl.textContent = 'City: ' + city + ', ' + state;
+            cardBodyEl.appendChild(cityEl);
+          }
 
           rowEl.appendChild(column);
           column.appendChild(petCard);
@@ -205,7 +214,7 @@ function fillSearch(url) {
         nextRowEl.appendChild(nextBtnEl);
         mainEl.appendChild(nextRowEl);
         nextBtnEl.addEventListener('click', () => {
-          apiUrl = `${location.pathname}?${nextBtnUrl.searchParams.toString()}`;
+          apiUrl.href = nextBtnUrl.href;
           window.history.replaceState(
             {},
             '',
@@ -230,38 +239,82 @@ const startSearch = () => {
   const housingReqs = Array.from(
     document.querySelectorAll('input[type="checkbox"]:checked')
   );
-  console.log(housingReqs);
-  if (zip) {
-    apiUrl += `&location=${zip}`;
+
+  removeUrlCheckboxes();
+  function removeUrlCheckboxes() {
+    if (apiUrl.searchParams.has('children')) {
+      apiUrl.searchParams.delete('children');
+      console.log(apiUrl.searchParams.has('children'));
+    }
+    if (apiUrl.searchParams.has('dogs')) {
+      apiUrl.searchParams.delete('dogs');
+    }
+    if (apiUrl.searchParams.has('cats')) {
+      apiUrl.searchParams.delete('cats');
+    }
+    if (apiUrl.searchParams.has('spayed_neutered')) {
+      apiUrl.searchParams.delete('spayed_neutered');
+    }
+    if (apiUrl.searchParams.has('special_needs')) {
+      apiUrl.searchParams.delete('special_needs');
+    }
+
+    if (apiUrl.searchParams.has('location')) {
+      apiUrl.searchParams.delete('location');
+    }
+    if (apiUrl.searchParams.has('breed')) {
+      apiUrl.searchParams.delete('breed');
+    }
+  }
+
+  console.log(apiUrl);
+  console.log(apiUrl.searchParams.has('location'));
+
+  if (zip && !apiUrl.searchParams.has('location')) {
+    apiUrl.searchParams.append('location', zip);
   }
   if (breed) {
-    apiUrl += `&breed=${breed}`;
+    apiUrl.searchParams.append('breed', breed);
   }
   if (housingReqs.length) {
-    console.log('we got here!');
+    console.log(apiUrl.searchParams.has('children'));
     for (let i = 0; i < housingReqs.length; i++) {
-      if (housingReqs[i].dataset.input === 'good-with-kids') {
-        console.log('we got here');
-        apiUrl += '&children=true';
-        console.log(apiUrl);
+      if (
+        housingReqs[i].dataset.input === 'good-with-kids' &&
+        !apiUrl.searchParams.has('children')
+      ) {
+        apiUrl.searchParams.append('children', 'true');
+        console.log(apiUrl.searchParams.has('children'));
       }
-      if (housingReqs[i].dataset.input === 'good-with-dogs') {
-        apiUrl += '&dogs=true';
+      if (
+        housingReqs[i].dataset.input === 'good-with-dogs' &&
+        !apiUrl.searchParams.has('dogs')
+      ) {
+        apiUrl.searchParams.append('dogs', 'true');
       }
-      if (housingReqs[i].dataset.input === 'good-with-cats') {
-        apiUrl += '&cats=true';
+      if (
+        housingReqs[i].dataset.input === 'good-with-cats' &&
+        !apiUrl.searchParams.has('cats')
+      ) {
+        apiUrl.searchParams.append('cats', 'true');
       }
-      if (housingReqs[i].dataset.input === 'spayed-neutered') {
-        apiUrl += '&spayed_neutered=true';
+      if (
+        housingReqs[i].dataset.input === 'spayed-neutered' &&
+        !apiUrl.searchParams.has('spayed_neutered')
+      ) {
+        apiUrl.searchParams.append('spayed_neutered', 'true');
       }
-      if (housingReqs[i].dataset.input === 'special-needs') {
-        apiUrl += '&special_needs=true';
+      if (
+        housingReqs[i].dataset.input === 'special-needs' &&
+        !apiUrl.searchParams.has('special_needs')
+      ) {
+        apiUrl.searchParams.append('special_needs', 'true');
       }
     }
   }
 
+  console.log(typeof apiUrl);
   console.log('the constructed url is: ------' + apiUrl);
-  apiUrl = new URL(apiUrl);
   console.log('the search params are: ' + apiUrl.search.substring(1));
   window.history.replaceState(
     {},
