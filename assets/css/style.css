@@ -11,6 +11,18 @@
   padding-bottom: 10px;
   margin-top: 20px;
 }
+#searchBar {
+  position: absolute;
+  bottom: -100px;
+  background-color: #f6f6f6;
+  z-index: 2;
+  
+  /* width: inherit; */
+
+}
+#searchParent {
+  padding: 0;
+}
 
 .links {
   border: solid;
@@ -56,12 +68,12 @@
     margin: auto;  
 }
 
-.footer {
+/* .footer {
   margin: auto;
   padding: 40px;
   border-style: transparent;
  
-}
+} */
 
 .card-title {
   text-shadow: 1px 1px 2px black;
@@ -71,8 +83,12 @@
   cursor: pointer;
 }
 
+#fillerImg {
+  margin: auto;
+}
+
 .carousel {
-  height: 450px;
+  height: 340px;
   perspective: 600px;
 }
 
@@ -84,7 +100,10 @@
     border-style: transparent;
     text-align: center;
     color: rgb(157, 160, 169);
-    
-
 }
+
+.hidden {
+  display: none;
+}
+
 
