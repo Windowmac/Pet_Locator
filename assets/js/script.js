@@ -34,18 +34,30 @@ const getToken = () => {
     })
     .then(() => {
       checkOnReload();
+    })
+    .then(() => {
+      fillBreedList();
     });
 };
 
+//get token and perform auto-fetches
 getToken();
+console.log('this is the token: ' + token);
 //fill the breed dropdown list from a call to the server (over 250 items)
-const fillBreedList = () => {
+function fillBreedList() {
   fetch('https://api.petfinder.com/v2/types/dog/breeds', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        console.log('failed here');
+        return;
+      } else {
+        return response.json();
+      }
+    })
     .then((data) => {
       populateBreeds(data);
       function populateBreeds(data) {
@@ -59,17 +71,15 @@ const fillBreedList = () => {
         });
       }
     });
-};
-fillBreedList();
+}
 
 function checkOnReload() {
   const ifSearchUrl = new URL(window.location.href);
-  const reloadParams = new URLSearchParams(ifSearchUrl);
   console.log(ifSearchUrl.search);
-  console.log(ifSearchUrl.search.length);
+  console.log(ifSearchUrl.searchParams.toString());
   if (ifSearchUrl.search.length) {
     fillSearch(
-      `https://api.petfinder.com/v2/animals?${reloadParams.toString()}`
+      `https://api.petfinder.com/v2/animals?${ifSearchUrl.searchParams.toString()}`
     );
   }
 }
@@ -187,17 +197,19 @@ function fillSearch(url) {
         );
         nextBtnEl.id = 'next-btn';
         console.log(data);
-        const nextBtnUrl = `https://api.petfinder.com${data.pagination._links.next.href}`;
-        const nextParams = new URLSearchParams(nextBtnUrl);
+        const nextBtnUrl = new URL(
+          `https://api.petfinder.com${data.pagination._links.next.href}`
+        );
         console.log(nextBtnUrl);
 
         nextRowEl.appendChild(nextBtnEl);
         mainEl.appendChild(nextRowEl);
         nextBtnEl.addEventListener('click', () => {
+          apiUrl = `${location.pathname}?${nextBtnUrl.searchParams.toString()}`;
           window.history.replaceState(
             {},
             '',
-            `${location.pathname}?${nextParams.toString()}`
+            `${location.pathname}?${nextBtnUrl.searchParams.toString()}`
           );
           fillSearch(nextBtnUrl);
         });
@@ -215,10 +227,10 @@ const startSearch = () => {
   //build api url for request from user's options
   const zip = document.getElementById('zip').value;
   const breed = document.getElementById('breed').value;
-  const housingReqs = document.querySelectorAll(
-    'input[type="checkbox"]:checked'
+  const housingReqs = Array.from(
+    document.querySelectorAll('input[type="checkbox"]:checked')
   );
-
+  console.log(housingReqs);
   if (zip) {
     apiUrl += `&location=${zip}`;
   }
@@ -226,20 +238,23 @@ const startSearch = () => {
     apiUrl += `&breed=${breed}`;
   }
   if (housingReqs.length) {
+    console.log('we got here!');
     for (let i = 0; i < housingReqs.length; i++) {
-      if (housingReqs[i].textContent === 'Good with kids') {
+      if (housingReqs[i].dataset.input === 'good-with-kids') {
+        console.log('we got here');
         apiUrl += '&children=true';
+        console.log(apiUrl);
       }
-      if (housingReqs[i].textContent === 'Good with dogs') {
+      if (housingReqs[i].dataset.input === 'good-with-dogs') {
         apiUrl += '&dogs=true';
       }
-      if (housingReqs[i].textContent === 'Good with cats') {
+      if (housingReqs[i].dataset.input === 'good-with-cats') {
         apiUrl += '&cats=true';
       }
-      if (housingReqs[i].textContent === 'Spayed/Neutered') {
+      if (housingReqs[i].dataset.input === 'spayed-neutered') {
         apiUrl += '&spayed_neutered=true';
       }
-      if (housingReqs[i].textContent === 'Has special needs') {
+      if (housingReqs[i].dataset.input === 'special-needs') {
         apiUrl += '&special_needs=true';
       }
     }
@@ -247,9 +262,7 @@ const startSearch = () => {
 
   console.log('the constructed url is: ------' + apiUrl);
   apiUrl = new URL(apiUrl);
-  console.log('the search params are: ' + apiUrl.search);
-  const startSearchParams = new URLSearchParams(apiUrl);
-  console.log(startSearchParams.toString());
+  console.log('the search params are: ' + apiUrl.search.substring(1));
   window.history.replaceState(
     {},
     '',
