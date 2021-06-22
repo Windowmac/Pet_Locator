@@ -33,12 +33,19 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.animal);
-        console.log(data.animal.age); //this is where all animal info is being pulled from
         const petName = document.getElementById('name');
         petName.textContent += data.animal.name;
+
         const petContact = document.getElementById('contact');
-        petContact.textContent += data.animal.contact.email;
+        petContact.textContent += 'Email: ';
+        const emailLink = document.createElement('a');
+        emailLink.classList.add('pet-email');
+            emailLink.setAttribute('href', 'mailto:', `#${data.animal.contact.email}!`);
+        emailLink.textContent += data.animal.contact.email;
+        emailLink.href += (data.animal.contact.email);
+
+        contact.appendChild(emailLink);
+
         const petAge = document.getElementById('age');
         petAge.textContent += data.animal.age;
         const petGender = document.getElementById('gender');
@@ -56,6 +63,8 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         const contactName = document.getElementById("contactName")
         contactName.textContent += data.animal.name;
 
+  
+
         //get the photos from the data
         const photoData = data.animal.photos;
     
@@ -64,7 +73,7 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
           const photos = photoData.map(singlePhoto => {
             return singlePhoto.large;
           })
-      //if there are more than 5 images, cut the array down to 5
+      //if there are more than 5 images, stop at 5 images
           if (photos.length > 5){
             photos.slice(0,5);
           }
@@ -73,10 +82,10 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
           carousel.innerHTML = '';
           carousel.classList.add('carousel');
        //build carousel
-          photos.forEach((singlePhoto,idx) => {
+          photos.forEach((singlePhoto,i) => {
             const aEl = document.createElement('a');
             aEl.classList.add('carousel-item');
-            aEl.setAttribute('href', `#${carouselInfo[idx]}!`);
+            aEl.setAttribute('href', `#${carouselInfo[i]}!`);
             const img = document.createElement('img');
             img.setAttribute('src',singlePhoto);
             aEl.appendChild(img);
@@ -88,7 +97,7 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         }
       });
   });
-  console.log(dogPhotosEl)  
+  
   
 function view() {
   document
@@ -97,9 +106,12 @@ function view() {
 }
 
 function prepare() {
-  document.getElementById('prepare').setAttribute('style', 'display: block');
+  document
+  .getElementById('prepare')
+  .setAttribute('style', 'display: block');
 }
 
+    
 
 
 
