@@ -142,15 +142,13 @@ function fillSearch(url) {
           const petImg = document.createElement('img');
           const name = animal.name;
           const age = animal.age;
-          const distance = Math.round(animal.distance);
+
           const cardBodyEl = document.createElement('div');
           cardBodyEl.classList.add('card-content');
           const nameEl = document.createElement('p');
           nameEl.textContent = 'Name: ' + name;
           const ageEl = document.createElement('p');
           ageEl.textContent = 'Age: ' + age;
-          const distanceEl = document.createElement('p');
-          distanceEl.textContent = 'Distance: ' + distance + ' miles';
 
           const goToPet = (event) => {
             window.location.href = `index2.html?id=${event.target.dataset.id}`;
@@ -167,7 +165,19 @@ function fillSearch(url) {
 
           cardBodyEl.appendChild(nameEl);
           cardBodyEl.appendChild(ageEl);
-          cardBodyEl.appendChild(distanceEl);
+
+          if (animal.distance) {
+            const distance = Math.round(animal.distance);
+            const distanceEl = document.createElement('p');
+            distanceEl.textContent = 'Distance: ' + distance + ' miles';
+            cardBodyEl.appendChild(distanceEl);
+          } else {
+            const city = animal.contact.address.city;
+            const state = animal.contact.address.state;
+            const cityEl = document.createElement('p');
+            cityEl.textContent = 'City: ' + city + ', ' + state;
+            cardBodyEl.appendChild(cityEl);
+          }
 
           rowEl.appendChild(column);
           column.appendChild(petCard);
