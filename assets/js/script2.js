@@ -1,3 +1,4 @@
+ 
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const pageUrl = new URL(window.location.href);
@@ -105,3 +106,10 @@ function view() {
 function prepare() {
   document.getElementById('prepare').setAttribute('style', 'display: block');
 }
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> main
