@@ -64,9 +64,6 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
 
         description.appendChild(descripLink);
 
-        const emailEl = document.getElementById('email');
-        emailEl.textContent += ' ' + data.animal.contact.email;
-
         const dogSize = document.getElementById('size');
         dogSize.textContent += data.animal.size;
         const petAddress = document.getElementById('address');
@@ -78,7 +75,7 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         const contactName = document.getElementById('contactName');
         contactName.textContent += data.animal.name;
         const breedLinkEl = document.getElementById('breed-link');
-        breedLinkEl.href = `https://www.petfinder.com/dog-breeds/${data.animal.breeds.primary}`;
+        breedLinkEl.href = `https://www.petfinder.com/dog-breeds/`;
 
         //get the photos from the data
         const photoData = data.animal.photos;
