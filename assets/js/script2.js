@@ -1,4 +1,12 @@
- 
+// const theDogApiKey = '4d766110-94d9-440d-865c-729a9448729d'
+
+// constbreedSelect =
+
+// function getBreeds(){
+// fetch `https://thedogapi.com/v1/breeds',
+// }
+
+
 const apiKey = 'QTEVrykyTWKuvUoExDQ5f5RtaC84D2zGPaEAhaTMj4IZjj3GBh';
 const apiSecret = 'amhRQM00ZGY4wT90wVpLrt3omeV6qW0vaKNL1yoG';
 const pageUrl = new URL(window.location.href);
@@ -8,7 +16,7 @@ const petId = params.get('id');
 console.log(petId);
 
 const petUrl = `https://api.petfinder.com/v2/animals/${petId}`;
-const carouselInfo = ['one','two','three','four','five'];
+const carouselInfo = ['one', 'two', 'three', 'four', 'five'];
 console.log(petUrl);
 
 fetch('https://api.petfinder.com/v2/oauth2/token', {
@@ -40,7 +48,7 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         petContact.textContent += 'Email: ';
         const emailLink = document.createElement('a');
         emailLink.classList.add('pet-email');
-            emailLink.setAttribute('href', 'mailto:', `#${data.animal.contact.email}!`);
+        emailLink.setAttribute('href', 'mailto:', `#${data.animal.contact.email}!`);
         emailLink.textContent += data.animal.contact.email;
         emailLink.href += (data.animal.contact.email);
 
@@ -52,32 +60,39 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         petGender.textContent += data.animal.gender;
         const petBreed = document.getElementById('breed');
         petBreed.textContent += data.animal.breeds.primary;
+
         const description = document.getElementById('description');
-        description.textContent += data.animal.description;
+        description.textContent += 'Please visit: ';
+        const descripLink = document.createElement('a');
+        descripLink.textContent = data.animal.url;
+        descripLink.href = data.animal.url;
+
+        description.appendChild(descripLink);
+
         const dogSize = document.getElementById('size');
         dogSize.textContent += data.animal.size;
-        const petAddress = document.getElementById("address")
+        const petAddress = document.getElementById('address');
         petAddress.textContent += data.animal.contact.address.city;
-        const about = document.getElementById("about")
+        const about = document.getElementById('about');
         about.textContent += data.animal.name;
-        const contactName = document.getElementById("contactName")
+        const contactName = document.getElementById('contactName');
         contactName.textContent += data.animal.name;
 
   
 
         //get the photos from the data
         const photoData = data.animal.photos;
-    
+
         //compensate for no photo
-        if (photoData && photoData.length > 0){
-          const photos = photoData.map(singlePhoto => {
+        if (photoData && photoData.length > 0) {
+          const photos = photoData.map((singlePhoto) => {
             return singlePhoto.large;
-          })
-      //if there are more than 5 images, stop at 5 images
-          if (photos.length > 5){
-            photos.slice(0,5);
+          });
+          //if there are more than 5 images, cut the array down to 5
+          if (photos.length > 5) {
+            photos.slice(0, 5);
           }
-         
+
           const carousel = document.querySelector('#photo-carousel');
           carousel.innerHTML = '';
           carousel.classList.add('carousel');
@@ -87,12 +102,12 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
             aEl.classList.add('carousel-item');
             aEl.setAttribute('href', `#${carouselInfo[i]}!`);
             const img = document.createElement('img');
-            img.setAttribute('src',singlePhoto);
+            img.setAttribute('src', singlePhoto);
             aEl.appendChild(img);
             carousel.appendChild(aEl);
           });
 
-         //start carousel
+          //start carousel
           const instances = M.Carousel.init(carousel, {});
         }
       });

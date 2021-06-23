@@ -1,30 +1,18 @@
-.navLinks {
-  max-width: 90%;
-  margin: auto;
-  
+
+
+#nav-wrapper {
+  width: 80%;
 }
 
 .resources {
   color: lightgrey;
   background-color: lightgrey;
-  
-  width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  width: 90%;
+  padding-top: 8px;
   margin-top: 20px;
+  height: 90px;
+  border-radius: 10px;
 }
-/* #searchBar {
-  position: absolute;
-  bottom: -100px;
-  background-color: #f6f6f6;
-  z-index: 2; */
-  
-  /* width: inherit; */
-
-/* }
-#searchParent {
-  padding: 0;
-} */
 
 .links {
   border: solid;
@@ -34,8 +22,9 @@
   color: black;
   font-size: 17px;
   background-color: white;
-  height: 80px;
+  height: 70px;
 }
+
 .dogs {
   text-align: center;
   margin: auto;
@@ -59,7 +48,6 @@
   color: rgb(157, 160, 169);
   margin: auto;
   padding: 10px;
-
 }
 
 #adoptionGuide {
@@ -80,7 +68,6 @@
   border-style: transparent;
   background-color: rgb(208, 208, 211);
   border-radius: 10px;
- 
 }
 
 .card-title {
@@ -91,33 +78,41 @@
   cursor: pointer;
 }
 
-#fillerImg {
+/* #fillerImg {
   margin: center;
-}
+} */
 
 .carousel {
-  height: 340px;
-  perspective: 600px;
+  height: 360px;
+  perspective: 400px;
 }
 
 .carousel-item {
   width: 300px !important;
 }
 .contact{
-    margin: Auto;
+    margin: auto;
     border-style: transparent;
     text-align: center;
     color: rgb(157, 160, 169);
+    height: 45px;
 }
+
+
 
 .hidden {
   display: none;
 }
 
 .dogEmail {
-  margin: auto;
-  position: relative;
-}
+
+  margin-left: 320px;
+  /* position: relative;
+} */
   
+
+
+
+
 
 
