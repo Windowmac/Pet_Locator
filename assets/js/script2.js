@@ -37,7 +37,7 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
         const petName = document.getElementById('name');
         petName.textContent += data.animal.name;
         const petContact = document.getElementById('contact');
-        petContact.textContent += data.animal.contact.email;
+        petContact.textContent += 'Email';
         const petAge = document.getElementById('age');
         petAge.textContent += data.animal.age;
         const petGender = document.getElementById('gender');
@@ -53,14 +53,21 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
 
         description.appendChild(descripLink);
 
+        const emailEl = document.getElementById('email');
+        emailEl.textContent += ' ' + data.animal.contact.email;
+
         const dogSize = document.getElementById('size');
         dogSize.textContent += data.animal.size;
         const petAddress = document.getElementById('address');
-        petAddress.textContent += data.animal.contact.address.city;
+        petAddress.textContent +=
+          data.animal.contact.address.city +
+          `, ${data.animal.contact.address.state}`;
         const about = document.getElementById('about');
         about.textContent += data.animal.name;
         const contactName = document.getElementById('contactName');
         contactName.textContent += data.animal.name;
+        const breedLinkEl = document.getElementById('breed-link');
+        breedLinkEl.href = `https://www.petfinder.com/dog-breeds/${data.animal.breeds.primary}`;
 
         //get the photos from the data
         const photoData = data.animal.photos;

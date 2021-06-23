@@ -175,13 +175,9 @@ const startSearch = () => {
   console.log(typeof apiUrl);
   console.log('the constructed url is: ------' + apiUrl);
   console.log('the search params are: ' + apiUrl.search.substring(1));
-  window.history.replaceState(
-    {},
-    '',
-    `${location.pathname}?${apiUrl.search.substring(1)}`
-  );
+  window.location.href = `${location.pathname}?${apiUrl.search.substring(1)}`;
 
-  fillSearch(apiUrl);
+  //fillSearch(apiUrl);
 };
 
 //handle placing items from search in the DOM
@@ -318,12 +314,10 @@ function fillSearch(url) {
 
         nextBtnEl.addEventListener('click', () => {
           apiUrl.href = nextBtnUrl.href;
-          window.history.replaceState(
-            {},
-            '',
-            `${location.pathname}?${nextBtnUrl.searchParams.toString()}`
-          );
-          fillSearch(nextBtnUrl);
+          window.location.href = `${
+            location.pathname
+          }?${nextBtnUrl.searchParams.toString()}`;
+          //fillSearch(nextBtnUrl);
         });
       }
     });
