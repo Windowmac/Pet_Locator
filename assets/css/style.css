@@ -1,41 +1,31 @@
+
 .navLinks {
   max-width: 90%;
-  margin: auto;
-  
+  margin: auto; 
 }
 
 .resources {
   color: lightgrey;
   background-color: lightgrey;
-  
-  width: 100%;
+  width: 90%;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-top: 20px;
+  border-radius: 7px;
 }
-/* #searchBar {
-  position: absolute;
-  bottom: -100px;
-  background-color: #f6f6f6;
-  z-index: 2; */
-  
-  /* width: inherit; */
-
-/* }
-#searchParent {
-  padding: 0;
-} */
 
 .links {
   border: solid;
   border-color: lightgrey;
   text-align: center;
   border-radius: 12px;
-  color: black;
+  color: rgb(107, 108, 113);
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
   font-size: 17px;
   background-color: white;
   height: 80px;
 }
+
 .dogs {
   text-align: center;
   margin: auto;
@@ -46,7 +36,7 @@
   height: fit-content;
   border-radius: 10px;
   border: solid;
-  color: rgb(157, 160, 169);
+  color: rgb(127, 129, 135);
   margin: auto;
   padding: 15px;
 }
@@ -56,7 +46,7 @@
   height: fit-content;
   border: solid;
   border-radius: 10px;
-  color: rgb(157, 160, 169);
+  color: rgb(127, 129, 135);
   margin: auto;
   padding: 10px;
 
@@ -76,9 +66,8 @@
 .footer {
   margin: auto;
   padding: 8px;
-  margin:20px;
+  width: fit-content;
   border-style: transparent;
-  background-color: rgb(208, 208, 211);
   border-radius: 10px;
  
 }
@@ -107,7 +96,7 @@
     margin: Auto;
     border-style: transparent;
     text-align: center;
-    color: rgb(157, 160, 169);
+    color: rgb(127, 129, 135);
 }
 
 .hidden {
@@ -115,7 +104,7 @@
 }
 
 .dogEmail {
-  margin: auto;
+  margin-left: 30px;
   position: relative;
 }
   

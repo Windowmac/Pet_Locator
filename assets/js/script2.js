@@ -111,12 +111,18 @@ fetch('https://api.petfinder.com/v2/oauth2/token', {
       });
   });
 
-function view() {
+function viewAdoptionGuide() {
   document
     .getElementById('adoptionGuide')
     .setAttribute('style', 'display: block');
 }
 
-function prepare() {
+function viewHowToPrepare() {
   document.getElementById('prepare').setAttribute('style', 'display: block');
 }
+
+
+    
+
+
+
