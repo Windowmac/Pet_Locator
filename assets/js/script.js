@@ -45,8 +45,6 @@ getToken();
 
 function checkOnReload() {
   const ifSearchUrl = new URL(window.location.href);
-  console.log(ifSearchUrl.search);
-  console.log(ifSearchUrl.searchParams.toString());
   if (ifSearchUrl.search.length) {
     fillSearch(
       `https://api.petfinder.com/v2/animals?${ifSearchUrl.searchParams.toString()}`
@@ -330,5 +328,4 @@ document.addEventListener('DOMContentLoaded', function () {
   const instances = M.Dropdown.init(elems);
   instances[1].options.closeOnClick = false;
   instances[1].options.coverTrigger = false;
-  console.log(instances);
 });
