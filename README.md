@@ -34,6 +34,8 @@ APPLICATION:
 
 See wesite at https://windowmac.github.io/Pet_Locator/
 
+Presentation slides available [Here](https://www.canva.com/design/DAEiERl4THI/-aD-id-JUXNbuiuEn1iGJw/view?utm_content=DAEiERl4THI&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton)
+
 GETTING STARTED:
 
 -On page load you will be greeted by one of our adoptable pets.
